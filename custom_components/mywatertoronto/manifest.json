@@ -1,0 +1,11 @@
+{
+  "domain": "mywatertoronto",
+  "name": "MyWaterToronto",
+  "documentation": "https://www.home-assistant.io/integrations/mywatertoronto/",
+  "requirements": ["pymywatertoronto==1.0.3"],
+  "codeowners": ["@davecpearce"],
+  "config_flow": true,
+  "iot_class": "cloud_polling",
+  "loggers": ["mywatertoronto"],
+  "version": "1.0.0"
+}
