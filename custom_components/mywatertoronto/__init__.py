@@ -1,27 +1,20 @@
 """The mywatertoronto integration."""
 from __future__ import annotations
 
-from typing import Any
 import logging
-from async_timeout import timeout
 
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
-from homeassistant.exceptions import ConfigEntryAuthFailed, ConfigEntryNotReady
-from homeassistant.helpers import entity_registry
-from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
-from .const import (
-    DATA_COORDINATOR,
-    DOMAIN,
-    PLATFORMS,
-)
-
+from .const import DATA_COORDINATOR
+from .const import DOMAIN
+from .const import PLATFORMS
 from .coordinator import MyWaterTorontoDataUpdateCoordinator
 
 _LOGGER = logging.getLogger(__name__)
 
-async def async_setup_entry(hass:HomeAssistant, entry: ConfigEntry) -> bool:
+
+async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Config entry set up in executor."""
 
     coordinator = MyWaterTorontoDataUpdateCoordinator(

@@ -4,6 +4,9 @@
 [![GitHub Activity][commits-shield]][commits]
 [![License][license-shield]](LICENSE)
 
+[![pre-commit][pre-commit-shield]][pre-commit]
+[![Black][black-shield]][black]
+
 [![hacs][hacsbadge]][hacs]
 [![Project Maintenance][maintenance-shield]][user_profile]
 [![BuyMeCoffee][buymecoffeebadge]][buymecoffee]
@@ -19,7 +22,7 @@ This a _custom component_ for [Home Assistant](https://www.home-assistant.io/). 
 This integration will create a device for your water meter with several `sensor` entities for various water consumption periods and the date of first and last reading.
 
 **Notes:**
-It appears that the City of Toronto only reads the meter every 24-48 hours.  While there is a sensor for Daily usage, this sensor is not accurate.
+It appears that the City of Toronto only reads the meter every 24-48 hours. While there is a sensor for Daily usage, this sensor is not accurate.
 
 ## Installation
 
@@ -35,7 +38,7 @@ Add the following to the Custom Repository under `Settings` in HACS:
 
 1. Use Git to clone the repo to a local directory by entering <br/>`git clone https://github.com/davecpearce/hacs-mywatertoronto.git`
 1. If you don't already have a `custom_components` directory in your Home Assistant config directory, create it.
-3. Copy or move the `mywatertoronto` folder from `hacs-mywatertoronto/custom_components` you cloned from step 1 to the  `custom_components` folder in your Home Assistant `config` folder.
+1. Copy or move the `mywatertoronto` folder from `hacs-mywatertoronto/custom_components` you cloned from step 1 to the `custom_components` folder in your Home Assistant `config` folder.
 
 ## Track Updates
 
@@ -53,18 +56,34 @@ There is a config flow for this integration. After installing the custom compone
 
 ## Available Sensors
 
-| Name                       | Description                                                                                             |
-| -------------------------- | ------------------------------------------------------------------------------------------------------- |
-| First Read Date            | The first available read date from the meter (Diagnostic).                                              |
-| Last Read Date             | The last read date from the meter (Diagnostic).                                                       |
-| Total Usage                | The total water usage from the First Read Date.                                                         |
-| Daily Usage                | The water usage for each day\*.                                                                              |
-| Week To Date Usage         | The water usage for the current week (starting Monday).                                                 |
-| Month To Date Usage        | The water usage for the current month.                                                                      |
-| Year To Date Usage         | The water usage for the current year.                                                                       |
+| Name                | Description                                                |
+| ------------------- | ---------------------------------------------------------- |
+| First Read Date     | The first available read date from the meter (Diagnostic). |
+| Last Read Date      | The last read date from the meter (Diagnostic).            |
+| Total Usage         | The total water usage from the First Read Date.            |
+| Daily Usage         | The water usage for each day\*.                            |
+| Week To Date Usage  | The water usage for the current week (starting Monday).    |
+| Month To Date Usage | The water usage for the current month.                     |
+| Year To Date Usage  | The water usage for the current year.                      |
 
 \* The Daily Usage sensor will not be accurate as the meter usage updates typically occur every 24-48 hours
 
+<!---->
+
+## Contributions are welcome!
+
+If you want to contribute to this please read the [Contribution guidelines](CONTRIBUTING.md)
+
+## Credits
+
+This project was generated from [@oncleben31](https://github.com/oncleben31)'s [Home Assistant Custom Component Cookiecutter](https://github.com/oncleben31/cookiecutter-homeassistant-custom-component) template.
+
+Code template was mainly taken from [@Ludeeus](https://github.com/ludeeus)'s [integration_blueprint][integration_blueprint] template
+
+---
+
+[black]: https://github.com/psf/black
+[black-shield]: https://img.shields.io/badge/code%20style-black-000000.svg?style=for-the-badge
 [buymecoffee]: https://www.buymeacoffee.com/davepearce
 [buymecoffeebadge]: https://img.shields.io/badge/buy%20me%20a%20coffee-donate-yellow.svg?style=for-the-badge
 [commits-shield]: https://img.shields.io/github/commit-activity/y/davecpearce/hacs-mywatertoronto.svg?style=for-the-badge
@@ -75,6 +94,8 @@ There is a config flow for this integration. After installing the custom compone
 [forum]: https://community.home-assistant.io/
 [license-shield]: https://img.shields.io/github/license/davecpearce/hacs-mywatertoronto.svg?style=for-the-badge
 [maintenance-shield]: https://img.shields.io/badge/maintainer-%40davecpearce-blue.svg?style=for-the-badge
+[pre-commit]: https://github.com/pre-commit/pre-commit
+[pre-commit-shield]: https://img.shields.io/badge/pre--commit-enabled-brightgreen?style=for-the-badge
 [releases-shield]: https://img.shields.io/github/release/davecpearce/hacs-mywatertoronto.svg?style=for-the-badge
 [releases]: https://github.com/davecpearce/hacs-mywatertoronto/releases
 [user_profile]: https://github.com/davecpearce

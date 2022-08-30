@@ -11,8 +11,7 @@ This a _custom component_ for [Home Assistant](https://www.home-assistant.io/). 
 This integration will create a device for your water meter with several `sensor` entities for various water consumption periods and the date of first and last reading.
 
 **Notes:**
-It appears that the City of Toronto only reads the meter every 24-48 hours.  While there is a sensor for Daily usage, this sensor is not accurate.
-
+It appears that the City of Toronto only reads the meter every 24-48 hours. While there is a sensor for Daily usage, this sensor is not accurate.
 
 **HACS Installation**
 
@@ -36,14 +35,14 @@ There is a config flow for this integration. After installing the custom compone
 
 ## Available Sensors
 
-| Name                       | Description                                                                                             |
-| -------------------------- | ------------------------------------------------------------------------------------------------------- |
-| First Read Date            | The first available read date from the meter (Diagnostic).                                              |
-| Last Read Date             | The last read date from the meter (Diagnostic).                                                       |
-| Total Usage                | The total water usage from the First Read Date.                                                         |
-| Daily Usage                | The water usage for each day\*.                                                                              |
-| Week To Date Usage         | The water usage for the current week (starting Monday).                                                 |
-| Month To Date Usage        | The water usage for the current month.                                                                      |
-| Year To Date Usage         | The water usage for the current year.                                                                       |
+| Name                | Description                                                |
+| ------------------- | ---------------------------------------------------------- |
+| First Read Date     | The first available read date from the meter (Diagnostic). |
+| Last Read Date      | The last read date from the meter (Diagnostic).            |
+| Total Usage         | The total water usage from the First Read Date.            |
+| Daily Usage         | The water usage for each day\*.                            |
+| Week To Date Usage  | The water usage for the current week (starting Monday).    |
+| Month To Date Usage | The water usage for the current month.                     |
+| Year To Date Usage  | The water usage for the current year.                      |
 
 \* The Daily Usage sensor will not be accurate as the meter usage updates typically occur every 24-48 hours

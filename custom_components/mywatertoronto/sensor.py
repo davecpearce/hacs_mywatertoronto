@@ -1,45 +1,38 @@
 """Sensor for displaying the number of result from MyWaterToronto."""
-from datetime import timedelta
 import logging
-from typing import Any, Final
+from datetime import timedelta
+from typing import Any
+from typing import Final
 
-from pymywatertoronto.enums import (
-    ConsumptionBuckets,
-)
-from pymywatertoronto.const import (
-    KEY_ADDRESS,
-    KEY_METER_FIRST_READ_DATE,
-    KEY_METER_LAST_READ_DATE,
-    KEY_METER_LIST,
-    KEY_METER_MANUFACTURER_TYPE,
-    KEY_METER_NUMBER,
-    KEY_PREMISE_ID,
-    KEY_PREMISE_LIST,
-)
-
-from homeassistant.components.sensor import (
-    SensorEntity,
-    SensorEntityDescription,
-    SensorStateClass,
-)
+from homeassistant.components.sensor import SensorEntity
+from homeassistant.components.sensor import SensorEntityDescription
+from homeassistant.components.sensor import SensorStateClass
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.core import (
-    HomeAssistant,
-    callback
+from homeassistant.const import (
+    VOLUME_CUBIC_METERS,
 )
-from homeassistant.helpers.entity import DeviceInfo, EntityCategory
+from homeassistant.core import callback
+from homeassistant.core import HomeAssistant
+from homeassistant.helpers.entity import DeviceInfo
+from homeassistant.helpers.entity import EntityCategory
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import (
     CoordinatorEntity,
 )
-from homeassistant.const import (
-    VOLUME_CUBIC_METERS,
+from pymywatertoronto.const import KEY_ADDRESS
+from pymywatertoronto.const import KEY_METER_FIRST_READ_DATE
+from pymywatertoronto.const import KEY_METER_LAST_READ_DATE
+from pymywatertoronto.const import KEY_METER_LIST
+from pymywatertoronto.const import KEY_METER_MANUFACTURER_TYPE
+from pymywatertoronto.const import KEY_METER_NUMBER
+from pymywatertoronto.const import KEY_PREMISE_ID
+from pymywatertoronto.const import KEY_PREMISE_LIST
+from pymywatertoronto.enums import (
+    ConsumptionBuckets,
 )
 
-from .const import (
-    DATA_COORDINATOR,
-    DOMAIN
-)
+from .const import DATA_COORDINATOR
+from .const import DOMAIN
 from .coordinator import MyWaterTorontoDataUpdateCoordinator
 
 _LOGGER = logging.getLogger(__name__)
@@ -51,14 +44,12 @@ SENSORS: Final[tuple[SensorEntityDescription, ...]] = (
         key=KEY_METER_LAST_READ_DATE,
         name="Last Read Date",
         icon="mdi:update",
-        #native_unit_of_measurement=SensorDeviceClass.TIMESTAMP,
         entity_category=EntityCategory.DIAGNOSTIC,
     ),
     SensorEntityDescription(
         key=KEY_METER_FIRST_READ_DATE,
         name="First Read Date",
         icon="mdi:update",
-        #native_unit_of_measurement=SensorDeviceClass..TIMESTAMP,
         entity_category=EntityCategory.DIAGNOSTIC,
     ),
     SensorEntityDescription(
@@ -98,6 +89,7 @@ SENSORS: Final[tuple[SensorEntityDescription, ...]] = (
     ),
 )
 
+
 async def async_setup_entry(
     hass: HomeAssistant,
     entry: ConfigEntry,
@@ -105,7 +97,9 @@ async def async_setup_entry(
 ) -> None:
     """Set up the MyWaterToronto sensors."""
 
-    coordinator: MyWaterTorontoDataUpdateCoordinator = hass.data[DOMAIN][entry.entry_id][DATA_COORDINATOR]
+    coordinator: MyWaterTorontoDataUpdateCoordinator = hass.data[DOMAIN][
+        entry.entry_id
+    ][DATA_COORDINATOR]
 
     entities = []
     account_details = coordinator.account_details
@@ -120,11 +114,18 @@ async def async_setup_entry(
                 _LOGGER.debug("Meter %s found at %s", meter_number, address)
 
                 for description in SENSORS:
-                    entities.append(MyWaterTorontoSensor(coordinator, entry, description, premise, meter))
+                    entities.append(
+                        MyWaterTorontoSensor(
+                            coordinator, entry, description, premise, meter
+                        )
+                    )
 
     async_add_entities(entities)
 
-class MyWaterTorontoSensor(CoordinatorEntity[MyWaterTorontoDataUpdateCoordinator], SensorEntity):
+
+class MyWaterTorontoSensor(
+    CoordinatorEntity[MyWaterTorontoDataUpdateCoordinator], SensorEntity
+):
     """Representation of the MyWaterToronto sensor."""
 
     _attr_has_entity_name = True
@@ -166,14 +167,18 @@ class MyWaterTorontoSensor(CoordinatorEntity[MyWaterTorontoDataUpdateCoordinator
 
         _LOGGER.debug("_handle_coordinator_update: %s", self.data_type)
 
-        meter_consumption = self.coordinator.data[KEY_PREMISE_LIST][self.premise[KEY_PREMISE_ID]][KEY_METER_LIST][self.meter[KEY_METER_NUMBER]]
+        meter_consumption = self.coordinator.data[KEY_PREMISE_LIST][
+            self.premise[KEY_PREMISE_ID]
+        ][KEY_METER_LIST][self.meter[KEY_METER_NUMBER]]
 
         if self.data_type == KEY_METER_FIRST_READ_DATE:
             self._attr_native_value = meter_consumption[KEY_METER_FIRST_READ_DATE]
         elif self.data_type == KEY_METER_LAST_READ_DATE:
             self._attr_native_value = meter_consumption[KEY_METER_LAST_READ_DATE]
         else:
-            self._attr_native_value = meter_consumption["consumption_data"][self.data_type]["consumption"]
+            self._attr_native_value = meter_consumption["consumption_data"][
+                self.data_type
+            ]["consumption"]
 
         super()._handle_coordinator_update()
 

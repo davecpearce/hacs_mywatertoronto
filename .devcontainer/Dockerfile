@@ -4,7 +4,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 RUN apt update \
     && sudo apt install -y libpcap-dev vim curl jq \
-    && mkdir -p /opt \
+    && mkdir -p /opt
 
 WORKDIR /opt
 

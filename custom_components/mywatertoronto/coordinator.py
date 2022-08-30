@@ -1,49 +1,45 @@
 """Coordinator for MyWaterToronto API."""
 from __future__ import annotations
 
-from datetime import timedelta
 import logging
-from typing import Any, cast
+from datetime import timedelta
+from typing import Any
+from typing import cast
 
-from pymywatertoronto.mywatertoronto import (
-    MyWaterToronto,
-)
+from homeassistant.config_entries import ConfigEntry
+from homeassistant.core import HomeAssistant
+from homeassistant.helpers.aiohttp_client import async_get_clientsession
+from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
+from homeassistant.helpers.update_coordinator import UpdateFailed
+from httpx import HTTPError
+from httpx import HTTPStatusError
+from httpx import TimeoutException
 from pymywatertoronto.enums import (
     LastPaymentMethod,
 )
 from pymywatertoronto.errors import (
     ValidateAccountInfoError,
 )
-
-from httpx import HTTPError, HTTPStatusError, TimeoutException
-
-from homeassistant.config_entries import ConfigEntry
-from homeassistant.core import HomeAssistant
-from homeassistant.helpers.aiohttp_client import async_get_clientsession
-from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
-
-from .const import (
-    CONF_ACCOUNT_NUMBER,
-    CONF_CLIENT_NUMBER,
-    CONF_LAST_NAME,
-    CONF_POSTAL_CODE,
-    CONF_LAST_PAYMENT_METHOD,
-    DOMAIN,
+from pymywatertoronto.mywatertoronto import (
+    MyWaterToronto,
 )
+
+from .const import CONF_ACCOUNT_NUMBER
+from .const import CONF_CLIENT_NUMBER
+from .const import CONF_LAST_NAME
+from .const import CONF_LAST_PAYMENT_METHOD
+from .const import CONF_POSTAL_CODE
+from .const import DOMAIN
 
 SCAN_INTERVAL = timedelta(minutes=60)
 
 _LOGGER = logging.getLogger(__name__)
 
+
 class MyWaterTorontoDataUpdateCoordinator(DataUpdateCoordinator):
     """Class to manage fetching MyWaterToronto data API."""
 
-    def __init__(
-        self,
-        hass: HomeAssistant,
-        *,
-        entry: ConfigEntry
-    ) -> None:
+    def __init__(self, hass: HomeAssistant, *, entry: ConfigEntry) -> None:
         """Initialize."""
 
         self.websession = async_get_clientsession(hass)
@@ -65,22 +61,31 @@ class MyWaterTorontoDataUpdateCoordinator(DataUpdateCoordinator):
             update_interval=SCAN_INTERVAL,
         )
 
-
     async def _async_update_data(self) -> dict[str, str]:
         """Fetch data from MyWaterToronto."""
 
         try:
             await self.mywatertoronto.async_validate_account()
         except ValidateAccountInfoError as err:
-            raise UpdateFailed(f"Error validating account with MyWaterToronto API: {err}") from err
+            raise UpdateFailed(
+                f"Error validating account with MyWaterToronto API: {err}"
+            ) from err
 
         try:
-            self.account_details = await self.mywatertoronto.async_get_account_details()
+            self.account_details = (
+                await self.mywatertoronto.async_get_account_details()
+            )  # noqa: E501
         except (HTTPError, HTTPStatusError, TimeoutException) as err:
-            raise UpdateFailed(f"Error communicating with MyWaterToronto API: {err}") from err
+            raise UpdateFailed(
+                f"Error communicating with MyWaterToronto API: {err}"
+            ) from err
 
         try:
-            return cast(dict[str, Any], await self.mywatertoronto.async_get_consumption())
+            return cast(
+                dict[str, Any],
+                await self.mywatertoronto.async_get_consumption(),
+            )
         except (HTTPError, HTTPStatusError, TimeoutException) as err:
-            raise UpdateFailed(f"Error communicating with MyWaterToronto API: {err}") from err
-
+            raise UpdateFailed(
+                f"Error communicating with MyWaterToronto API: {err}"
+            ) from err
