@@ -1,23 +1,24 @@
 {
   "config": {
-    "step": {
-      "user": {
-        "title": "Connect to your MyWaterToronto Account",
-        "description": "In order to access you MyWaterToronto usage, you will need account information from a City of Toronto Utility bill",
-        "data": {
-          "account_number": "Account Number",
-          "client_number": "Client Number",
-          "last_name": "Last Name",
-          "postal_code": "Postal Code",
-          "last_payment_method": "Last Payment Method"
-        }
-      }
+    "abort": {
+      "already_configured": "Already configured"
     },
     "error": {
       "cannot_connect": "Failed to connect, account information may be incorrect"
     },
-    "abort": {
-      "already_configured": "Already configured"
+    "step": {
+      "user": {
+        "data": {
+          "account_number": "Account Number",
+          "client_number": "Client Number",
+          "last_name": "Last Name",
+          "last_payment_method": "Last Payment Method",
+          "postal_code": "Postal Code"
+        },
+        "description": "In order to access you MyWaterToronto usage, you will need account information from a City of Toronto Utility bill",
+        "title": "Connect to your MyWaterToronto Account"
+      }
     }
-  }
+  },
+  "title": "MyWaterToronto"
 }
