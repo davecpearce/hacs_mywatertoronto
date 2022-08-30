@@ -1,4 +1,4 @@
-FROM ghcr.io/ludeeus/devcontainer/integration:stable
+FROM ghcr.io/ludeeus/devcontainer/integration:latest
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
