@@ -1,7 +1,8 @@
 {
   "domain": "mywatertoronto",
   "name": "MyWaterToronto",
-  "documentation": "https://www.home-assistant.io/integrations/mywatertoronto/",
+  "documentation": "https://github.com/davecpearce/hacs-mywatertoronto",
+  "issue_tracker": "https://github.com/davecpearce/hacs-mywatertoronto/issues",
   "requirements": ["pymywatertoronto==1.0.3"],
   "codeowners": ["@davecpearce"],
   "config_flow": true,
