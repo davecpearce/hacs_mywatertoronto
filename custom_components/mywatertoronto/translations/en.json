@@ -15,10 +15,8 @@
           "last_payment_method": "Last Payment Method",
           "postal_code": "Postal Code"
         },
-        "description": "In order to access you MyWaterToronto usage, you will need account information from a City of Toronto Utility bill",
-        "title": "Connect to your MyWaterToronto Account"
+        "description": "In order to access you MyWaterToronto usage, you will need account information from a City of Toronto Utility bill"
       }
     }
-  },
-  "title": "MyWaterToronto"
+  }
 }
