@@ -17,7 +17,7 @@ It appears that the City of Toronto only reads the meter every 24-48 hours. Whil
 
 Add the following to the Custom Repository under `Settings` in HACS:
 
-`davecpearce/hacs-mywatertoronto` and choose `Integration` as the Category
+`davecpearce/hacs_mywatertoronto` and choose `Integration` as the Category
 
 ## Track Updates
 

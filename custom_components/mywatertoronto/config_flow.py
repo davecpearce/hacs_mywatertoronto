@@ -1,32 +1,31 @@
 """Config flow for mywatertoronto integration."""
 import logging
 
+from pymywatertoronto.const import KEY_ADDRESS, KEY_PREMISE_LIST
+from pymywatertoronto.enums import LastPaymentMethod
+from pymywatertoronto.errors import AccountDetailsError, ValidateAccountInfoError
+from pymywatertoronto.mywatertoronto import MyWaterToronto
 import voluptuous as vol
+
 from homeassistant import config_entries
 from homeassistant.data_entry_flow import FlowResult
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
-from homeassistant.helpers.selector import SelectOptionDict
-from homeassistant.helpers.selector import SelectSelector
-from homeassistant.helpers.selector import SelectSelectorConfig
-from homeassistant.helpers.selector import SelectSelectorMode
-from homeassistant.helpers.selector import TextSelector
-from pymywatertoronto.const import KEY_ADDRESS
-from pymywatertoronto.const import KEY_PREMISE_LIST
-from pymywatertoronto.enums import (
-    LastPaymentMethod,
-)
-from pymywatertoronto.errors import AccountDetailsError
-from pymywatertoronto.errors import ValidateAccountInfoError
-from pymywatertoronto.mywatertoronto import (
-    MyWaterToronto,
+from homeassistant.helpers.selector import (
+    SelectOptionDict,
+    SelectSelector,
+    SelectSelectorConfig,
+    SelectSelectorMode,
+    TextSelector,
 )
 
-from .const import CONF_ACCOUNT_NUMBER
-from .const import CONF_CLIENT_NUMBER
-from .const import CONF_LAST_NAME
-from .const import CONF_LAST_PAYMENT_METHOD
-from .const import CONF_POSTAL_CODE
-from .const import DOMAIN
+from .const import (
+    CONF_ACCOUNT_NUMBER,
+    CONF_CLIENT_NUMBER,
+    CONF_LAST_NAME,
+    CONF_LAST_PAYMENT_METHOD,
+    CONF_POSTAL_CODE,
+    DOMAIN,
+)
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -60,7 +59,6 @@ class MyWaterTorontoFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
     VERSION = 1
 
     async def async_step_user(self, user_input=None) -> FlowResult:
-
         """Handle the flow initialized by the user."""
 
         errors = {}

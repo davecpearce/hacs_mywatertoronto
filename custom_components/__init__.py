@@ -1,1 +1,1 @@
-"""Dummy init so that pytest works."""
+"""Required for vscode pytest discovery."""

@@ -10,14 +10,13 @@ WORKDIR /opt
 
 RUN git clone --depth=1 -b dev https://github.com/home-assistant/core.git hass \
     && python3 -m pip --disable-pip-version-check install --upgrade ./hass \
-    && ln -s /workspaces/hacs-mywatertoronto/custom_components/mywatertoronto /opt/hass/homeassistant/components/mywatertoronto
+    && ln -s /workspaces/hacs_mywatertoronto/custom_components/mywatertoronto /opt/hass/homeassistant/components/mywatertoronto
 
-WORKDIR /workspaces/hacs-mywatertoronto
+WORKDIR /workspaces/hacs_mywatertoronto
 RUN pip install pre-commit
 
 # Setup the Home Assistant enviropnment
 WORKDIR /opt/hass
 RUN ./script/setup
-
 
 ENV SHELL /bin/bash

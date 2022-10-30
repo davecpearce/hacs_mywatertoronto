@@ -1,38 +1,34 @@
 """Sensor for displaying the number of result from MyWaterToronto."""
-import logging
 from datetime import timedelta
-from typing import Any
-from typing import Final
+import logging
+from typing import Any, Final
 
-from homeassistant.components.sensor import SensorEntity
-from homeassistant.components.sensor import SensorEntityDescription
-from homeassistant.components.sensor import SensorStateClass
+from pymywatertoronto.const import (
+    KEY_ADDRESS,
+    KEY_METER_FIRST_READ_DATE,
+    KEY_METER_LAST_READ_DATE,
+    KEY_METER_LIST,
+    KEY_METER_MANUFACTURER_TYPE,
+    KEY_METER_NUMBER,
+    KEY_PREMISE_ID,
+    KEY_PREMISE_LIST,
+)
+from pymywatertoronto.enums import ConsumptionBuckets
+
+from homeassistant.components.sensor import (
+    SensorDeviceClass,
+    SensorEntity,
+    SensorEntityDescription,
+    SensorStateClass,
+)
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.const import (
-    VOLUME_CUBIC_METERS,
-)
-from homeassistant.core import callback
-from homeassistant.core import HomeAssistant
-from homeassistant.helpers.entity import DeviceInfo
-from homeassistant.helpers.entity import EntityCategory
+from homeassistant.const import VOLUME_CUBIC_METERS
+from homeassistant.core import HomeAssistant, callback
+from homeassistant.helpers.entity import DeviceInfo, EntityCategory
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
-from homeassistant.helpers.update_coordinator import (
-    CoordinatorEntity,
-)
-from pymywatertoronto.const import KEY_ADDRESS
-from pymywatertoronto.const import KEY_METER_FIRST_READ_DATE
-from pymywatertoronto.const import KEY_METER_LAST_READ_DATE
-from pymywatertoronto.const import KEY_METER_LIST
-from pymywatertoronto.const import KEY_METER_MANUFACTURER_TYPE
-from pymywatertoronto.const import KEY_METER_NUMBER
-from pymywatertoronto.const import KEY_PREMISE_ID
-from pymywatertoronto.const import KEY_PREMISE_LIST
-from pymywatertoronto.enums import (
-    ConsumptionBuckets,
-)
+from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
-from .const import DATA_COORDINATOR
-from .const import DOMAIN
+from .const import DATA_COORDINATOR, DOMAIN
 from .coordinator import MyWaterTorontoDataUpdateCoordinator
 
 _LOGGER = logging.getLogger(__name__)
@@ -57,6 +53,7 @@ SENSORS: Final[tuple[SensorEntityDescription, ...]] = (
         name="Total Usage",
         icon="mdi:gauge",
         native_unit_of_measurement=VOLUME_CUBIC_METERS,
+        device_class=SensorDeviceClass.WATER,
         state_class=SensorStateClass.TOTAL_INCREASING,
     ),
     SensorEntityDescription(
@@ -64,7 +61,7 @@ SENSORS: Final[tuple[SensorEntityDescription, ...]] = (
         name="Daily Usage",
         icon="mdi:gauge",
         native_unit_of_measurement=VOLUME_CUBIC_METERS,
-        state_class=SensorStateClass.TOTAL_INCREASING,
+        state_class=SensorStateClass.MEASUREMENT,
     ),
     SensorEntityDescription(
         key=ConsumptionBuckets.WEEK_TO_DATE_USAGE.value,

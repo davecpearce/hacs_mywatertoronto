@@ -6,16 +6,19 @@ import logging
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 
-from .const import DATA_COORDINATOR
-from .const import DOMAIN
-from .const import PLATFORMS
+from .const import DATA_COORDINATOR, DOMAIN, PLATFORMS
 from .coordinator import MyWaterTorontoDataUpdateCoordinator
 
 _LOGGER = logging.getLogger(__name__)
 
 
+async def async_setup(hass: HomeAssistant, config: dict):
+    """Set up the MyWaterToronto Integration component."""
+    return True
+
+
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
-    """Config entry set up in executor."""
+    """Set up MyWaterToronto from a config entry."""
 
     coordinator = MyWaterTorontoDataUpdateCoordinator(
         hass,
@@ -41,3 +44,9 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         hass.data[DOMAIN].pop(entry.entry_id)
 
     return unload_ok
+
+
+async def async_reload_entry(hass: HomeAssistant, entry: ConfigEntry) -> None:
+    """Reload config entry."""
+    await async_unload_entry(hass, entry)
+    await async_setup_entry(hass, entry)

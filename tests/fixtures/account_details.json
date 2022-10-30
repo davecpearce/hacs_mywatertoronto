@@ -1,0 +1,37 @@
+{
+  "premiseList": [
+    {
+      "address": "123 MAIN ST",
+      "meterList": [
+        {
+          "meterSize": "MS040",
+          "meterNumber": "12345678",
+          "intervalMins": "60",
+          "meterGroupList": [],
+          "meterClass": "NORMAL",
+          "miu": "123456789-1",
+          "meterInstallDate": "2018-01-01",
+          "meterManufacturerType": "NEPTUNE T10 AUTO NTG",
+          "firstReadDate": "2019-01-01",
+          "lastReadDate": "2019-12-31",
+          "lastReading": "00123.0",
+          "unitofMeasure": "m3",
+          "linkedMeterList": []
+        }
+      ],
+      "addrSuf": "",
+      "ward": 10,
+      "district": "My District",
+      "premiseId": "123456",
+      "addrNum": "123",
+      "addrZip": "A1A1A5",
+      "addrName": "MAIN ST",
+      "addrCity": "Any Town",
+      "addrState": "ON"
+    }
+  ],
+  "accountType": "RES-SINGLE",
+  "account": "00012345600123456712",
+  "linkedAccountList": [],
+  "resultCode": 200
+}

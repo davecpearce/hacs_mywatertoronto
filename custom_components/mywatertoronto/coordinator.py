@@ -1,35 +1,35 @@
 """Coordinator for MyWaterToronto API."""
 from __future__ import annotations
 
-import logging
 from datetime import timedelta
-from typing import Any
-from typing import cast
+import logging
+from typing import Any, cast
+
+from pymywatertoronto.enums import LastPaymentMethod
+from pymywatertoronto.errors import (
+    AccountDetailsError,
+    ApiError,
+    ValidateAccountInfoError,
+)
+from pymywatertoronto.mywatertoronto import MyWaterToronto
 
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
-from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
-from homeassistant.helpers.update_coordinator import UpdateFailed
-from httpx import HTTPError
-from httpx import HTTPStatusError
-from httpx import TimeoutException
-from pymywatertoronto.enums import (
-    LastPaymentMethod,
-)
-from pymywatertoronto.errors import (
-    ValidateAccountInfoError,
-)
-from pymywatertoronto.mywatertoronto import (
-    MyWaterToronto,
-)
+from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
-from .const import CONF_ACCOUNT_NUMBER
-from .const import CONF_CLIENT_NUMBER
-from .const import CONF_LAST_NAME
-from .const import CONF_LAST_PAYMENT_METHOD
-from .const import CONF_POSTAL_CODE
-from .const import DOMAIN
+from .const import (
+    CONF_ACCOUNT_NUMBER,
+    CONF_CLIENT_NUMBER,
+    CONF_LAST_NAME,
+    CONF_LAST_PAYMENT_METHOD,
+    CONF_POSTAL_CODE,
+    DOMAIN,
+    ERROR_API,
+    ERROR_GET_ACCOUNT_DETAILS,
+    ERROR_GET_CONSUMPTION,
+    ERROR_VALIDATING_ACCOUNT,
+)
 
 SCAN_INTERVAL = timedelta(minutes=60)
 
@@ -66,26 +66,22 @@ class MyWaterTorontoDataUpdateCoordinator(DataUpdateCoordinator):
 
         try:
             await self.mywatertoronto.async_validate_account()
+        except ApiError as err:
+            raise UpdateFailed(f"{ERROR_API}: {err}") from err
         except ValidateAccountInfoError as err:
-            raise UpdateFailed(
-                f"Error validating account with MyWaterToronto API: {err}"
-            ) from err
+            raise UpdateFailed(f"{ERROR_VALIDATING_ACCOUNT}: {err}") from err
 
         try:
-            self.account_details = (
-                await self.mywatertoronto.async_get_account_details()
-            )  # noqa: E501
-        except (HTTPError, HTTPStatusError, TimeoutException) as err:
-            raise UpdateFailed(
-                f"Error communicating with MyWaterToronto API: {err}"
-            ) from err
+            self.account_details = await self.mywatertoronto.async_get_account_details()
+        except ApiError as err:
+            raise UpdateFailed(f"{ERROR_API}: {err}") from err
+        except AccountDetailsError as err:
+            raise UpdateFailed(f"{ERROR_GET_ACCOUNT_DETAILS}: {err}") from err
 
         try:
             return cast(
                 dict[str, Any],
                 await self.mywatertoronto.async_get_consumption(),
             )
-        except (HTTPError, HTTPStatusError, TimeoutException) as err:
-            raise UpdateFailed(
-                f"Error communicating with MyWaterToronto API: {err}"
-            ) from err
+        except Exception as err:
+            raise UpdateFailed(f"{ERROR_GET_CONSUMPTION}: {err}") from err
