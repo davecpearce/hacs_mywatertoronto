@@ -44,7 +44,7 @@ async def test_sensor(hass, account_details, consumption):
         sensor_frd = generate_entity_id(name_frd)
         state_frd = hass.states.get(sensor_frd)
 
-        assert state_frd.state == "2019-01-01"
+        assert state_frd.state == "2019-01-01T00:00:00"
         assert state_frd.attributes.get("friendly_name") == f"{TEST_TITLE} {name_frd}"
 
         # Test Last Read Date sensor
@@ -52,7 +52,7 @@ async def test_sensor(hass, account_details, consumption):
         sensor_lrd = generate_entity_id(name_lrd)
         state_lrd = hass.states.get(sensor_lrd)
 
-        assert state_lrd.state == "2019-12-31"
+        assert state_lrd.state == "2019-12-31T00:00:00"
         assert state_lrd.attributes.get("friendly_name") == f"{TEST_TITLE} {name_lrd}"
 
         # Test Total Usage sensor

@@ -1,5 +1,5 @@
 """Sensor for displaying the number of result from MyWaterToronto."""
-from datetime import timedelta
+from datetime import datetime, timedelta
 import logging
 from typing import Any, Final
 
@@ -40,18 +40,20 @@ SENSORS: Final[tuple[SensorEntityDescription, ...]] = (
         key=KEY_METER_LAST_READ_DATE,
         name="Last Read Date",
         icon="mdi:update",
+        device_class=SensorDeviceClass.DATE,
         entity_category=EntityCategory.DIAGNOSTIC,
     ),
     SensorEntityDescription(
         key=KEY_METER_FIRST_READ_DATE,
         name="First Read Date",
         icon="mdi:update",
+        device_class=SensorDeviceClass.DATE,
         entity_category=EntityCategory.DIAGNOSTIC,
     ),
     SensorEntityDescription(
         key=ConsumptionBuckets.TOTAL_USAGE.value,
         name="Total Usage",
-        icon="mdi:gauge",
+        icon="mdi:water",
         native_unit_of_measurement=VOLUME_CUBIC_METERS,
         device_class=SensorDeviceClass.WATER,
         state_class=SensorStateClass.TOTAL_INCREASING,
@@ -59,29 +61,33 @@ SENSORS: Final[tuple[SensorEntityDescription, ...]] = (
     SensorEntityDescription(
         key=ConsumptionBuckets.TODAY_USAGE.value,
         name="Daily Usage",
-        icon="mdi:gauge",
+        icon="mdi:water",
         native_unit_of_measurement=VOLUME_CUBIC_METERS,
+        device_class=SensorDeviceClass.WATER,
         state_class=SensorStateClass.MEASUREMENT,
     ),
     SensorEntityDescription(
         key=ConsumptionBuckets.WEEK_TO_DATE_USAGE.value,
         name="Week To Date Usage",
-        icon="mdi:gauge",
+        icon="mdi:water",
         native_unit_of_measurement=VOLUME_CUBIC_METERS,
+        device_class=SensorDeviceClass.WATER,
         state_class=SensorStateClass.TOTAL_INCREASING,
     ),
     SensorEntityDescription(
         key=ConsumptionBuckets.MONTH_TO_DATE_USAGE.value,
         name="Month To Date Usage",
-        icon="mdi:gauge",
+        icon="mdi:water",
         native_unit_of_measurement=VOLUME_CUBIC_METERS,
+        device_class=SensorDeviceClass.WATER,
         state_class=SensorStateClass.TOTAL_INCREASING,
     ),
     SensorEntityDescription(
         key=ConsumptionBuckets.YEAR_TO_DATE_USAGE.value,
         name="Year To Date Usage",
-        icon="mdi:gauge",
+        icon="mdi:water",
         native_unit_of_measurement=VOLUME_CUBIC_METERS,
+        device_class=SensorDeviceClass.WATER,
         state_class=SensorStateClass.TOTAL_INCREASING,
     ),
 )
@@ -169,9 +175,13 @@ class MyWaterTorontoSensor(
         ][KEY_METER_LIST][self.meter[KEY_METER_NUMBER]]
 
         if self.data_type == KEY_METER_FIRST_READ_DATE:
-            self._attr_native_value = meter_consumption[KEY_METER_FIRST_READ_DATE]
+            date_str = meter_consumption[KEY_METER_FIRST_READ_DATE]
+            date_time_obj = datetime.strptime(date_str, "%Y-%m-%d")
+            self._attr_native_value = date_time_obj
         elif self.data_type == KEY_METER_LAST_READ_DATE:
-            self._attr_native_value = meter_consumption[KEY_METER_LAST_READ_DATE]
+            date_str = meter_consumption[KEY_METER_LAST_READ_DATE]
+            date_time_obj = datetime.strptime(date_str, "%Y-%m-%d")
+            self._attr_native_value = date_time_obj
         else:
             self._attr_native_value = meter_consumption["consumption_data"][
                 self.data_type
