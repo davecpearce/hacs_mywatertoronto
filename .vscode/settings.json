@@ -1,8 +1,13 @@
 {
-  "python.linting.pylintEnabled": true,
   "python.linting.enabled": true,
-  "python.pythonPath": "venv/bin/python",
-  "files.associations": {
-    "*.yaml": "home-assistant"
-  }
+  "python.linting.pylintEnabled": true,
+  "python.linting.pylintArgs": ["--load-plugins=pylint_django"],
+  "python.linting.pycodestyleEnabled": false,
+  "python.linting.flake8Enabled": true,
+  "python.formatting.provider": "black",
+  "python.formatting.blackArgs": ["--line-length", "100"],
+  "python.testing.unittestEnabled": false,
+  "python.testing.pytestEnabled": true,
+  "python.testing.pytestArgs": ["--pdb", "--no-cov"],
+  "githubPullRequests.ignoredPullRequestBranches": ["main", "main"]
 }

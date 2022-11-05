@@ -32,13 +32,13 @@ This Integration can be installed in two ways:
 
 Add the following to the Custom Repository under `Settings` in HACS:
 
-`davecpearce/hacs-mywatertoronto` and choose `Integration` as the Category
+`davecpearce/hacs_mywatertoronto` and choose `Integration` as the Category
 
 **Manual Installation**
 
-1. Use Git to clone the repo to a local directory by entering <br/>`git clone https://github.com/davecpearce/hacs-mywatertoronto.git`
+1. Use Git to clone the repo to a local directory by entering <br/>`git clone https://github.com/davecpearce/hacs_mywatertoronto.git`
 1. If you don't already have a `custom_components` directory in your Home Assistant config directory, create it.
-1. Copy or move the `mywatertoronto` folder from `hacs-mywatertoronto/custom_components` you cloned from step 1 to the `custom_components` folder in your Home Assistant `config` folder.
+1. Copy or move the `mywatertoronto` folder from `hacs_mywatertoronto/custom_components` you cloned from step 1 to the `custom_components` folder in your Home Assistant `config` folder.
 
 ## Track Updates
 
@@ -102,16 +102,16 @@ Code template was mainly taken from [@Ludeeus](https://github.com/ludeeus)'s [in
 [black-shield]: https://img.shields.io/badge/code%20style-black-000000.svg?style=for-the-badge
 [buymecoffee]: https://www.buymeacoffee.com/davepearce
 [buymecoffeebadge]: https://img.shields.io/badge/buy%20me%20a%20coffee-donate-yellow.svg?style=for-the-badge
-[commits-shield]: https://img.shields.io/github/commit-activity/y/davecpearce/hacs-mywatertoronto.svg?style=for-the-badge
-[commits]: https://github.com/davecpearce/hacs-mywatertoronto/commits/main
+[commits-shield]: https://img.shields.io/github/commit-activity/y/davecpearce/hacs_mywatertoronto.svg?style=for-the-badge
+[commits]: https://github.com/davecpearce/hacs_mywatertoronto/commits/main
 [hacs]: https://hacs.xyz
 [hacsbadge]: https://img.shields.io/badge/HACS-Custom-orange.svg?style=for-the-badge
 [forum-shield]: https://img.shields.io/badge/community-forum-brightgreen.svg?style=for-the-badge
 [forum]: https://community.home-assistant.io/
-[license-shield]: https://img.shields.io/github/license/davecpearce/hacs-mywatertoronto.svg?style=for-the-badge
+[license-shield]: https://img.shields.io/github/license/davecpearce/hacs_mywatertoronto.svg?style=for-the-badge
 [maintenance-shield]: https://img.shields.io/badge/maintainer-%40davecpearce-blue.svg?style=for-the-badge
 [pre-commit]: https://github.com/pre-commit/pre-commit
 [pre-commit-shield]: https://img.shields.io/badge/pre--commit-enabled-brightgreen?style=for-the-badge
-[releases-shield]: https://img.shields.io/github/release/davecpearce/hacs-mywatertoronto.svg?style=for-the-badge
-[releases]: https://github.com/davecpearce/hacs-mywatertoronto/releases
+[releases-shield]: https://img.shields.io/github/release/davecpearce/hacs_mywatertoronto.svg?style=for-the-badge
+[releases]: https://github.com/davecpearce/hacs_mywatertoronto/releases
 [user_profile]: https://github.com/davecpearce

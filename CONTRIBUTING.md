@@ -74,7 +74,7 @@ source venv/bin/activate
 # Install requirements
 pip install -r requirements_test.txt
 # Run tests and get a summary of successes/failures and code coverage
-pytest --durations=10 --cov-report term-missing --cov=custom_components.hacs-mywatertoronto tests
+pytest --durations=10 --cov-report term-missing --cov=custom_components.hacs_mywatertoronto tests
 ```
 
 If any of the tests fail, make the necessary changes to the tests as part of

@@ -1,0 +1,35 @@
+{
+  "premiseList": {
+    "123456": {
+      "address": "123 MAIN ST",
+      "meterList": {
+        "12345678": {
+          "firstReadDate": "2019-01-01",
+          "lastReadDate": "2019-12-31",
+          "consumption_data": {
+            "total_usage": {
+              "consumption": "500.5",
+              "unit_of_measure": "m3"
+            },
+            "today_usage": {
+              "consumption": "0.5",
+              "unit_of_measure": "m3"
+            },
+            "week_to_date_usage": {
+              "consumption": "3.5",
+              "unit_of_measure": "m3"
+            },
+            "month_to_date_usage": {
+              "consumption": "8.5",
+              "unit_of_measure": "m3"
+            },
+            "year_to_date_usage": {
+              "consumption": "123.5",
+              "unit_of_measure": "m3"
+            }
+          }
+        }
+      }
+    }
+  }
+}

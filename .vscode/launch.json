@@ -13,7 +13,7 @@
       "host": "localhost",
       "pathMappings": [
         {
-          "localRoot": "/workspaces/hacs-mywatertoronto",
+          "localRoot": "/workspaces/hacs_mywatertoronto",
           "remoteRoot": "."
         }
       ]

@@ -1,2 +1,5 @@
 -r requirements_dev.txt
 pytest-homeassistant-custom-component==0.12.16
+black
+flake8
+reorder-python-imports

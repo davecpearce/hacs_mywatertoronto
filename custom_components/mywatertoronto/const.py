@@ -20,3 +20,8 @@ CONF_LAST_PAYMENT_METHOD = "last_payment_method"
 
 DATA_COORDINATOR = "coordinator"
 DATA_UNDO_UPDATE_LISTENER = "undo_update_listener"
+
+ERROR_API = "Error calling MyWaterToronto API"
+ERROR_VALIDATING_ACCOUNT = "Error validating account with MyWaterToronto API"
+ERROR_GET_ACCOUNT_DETAILS = "Error getting account details"
+ERROR_GET_CONSUMPTION = "Error getting consumption data"

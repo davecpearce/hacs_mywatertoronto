@@ -1,38 +1,34 @@
 """Sensor for displaying the number of result from MyWaterToronto."""
+from datetime import datetime, timedelta
 import logging
-from datetime import timedelta
-from typing import Any
-from typing import Final
+from typing import Any, Final
 
-from homeassistant.components.sensor import SensorEntity
-from homeassistant.components.sensor import SensorEntityDescription
-from homeassistant.components.sensor import SensorStateClass
+from pymywatertoronto.const import (
+    KEY_ADDRESS,
+    KEY_METER_FIRST_READ_DATE,
+    KEY_METER_LAST_READ_DATE,
+    KEY_METER_LIST,
+    KEY_METER_MANUFACTURER_TYPE,
+    KEY_METER_NUMBER,
+    KEY_PREMISE_ID,
+    KEY_PREMISE_LIST,
+)
+from pymywatertoronto.enums import ConsumptionBuckets
+
+from homeassistant.components.sensor import (
+    SensorDeviceClass,
+    SensorEntity,
+    SensorEntityDescription,
+    SensorStateClass,
+)
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.const import (
-    VOLUME_CUBIC_METERS,
-)
-from homeassistant.core import callback
-from homeassistant.core import HomeAssistant
-from homeassistant.helpers.entity import DeviceInfo
-from homeassistant.helpers.entity import EntityCategory
+from homeassistant.const import VOLUME_CUBIC_METERS
+from homeassistant.core import HomeAssistant, callback
+from homeassistant.helpers.entity import DeviceInfo, EntityCategory
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
-from homeassistant.helpers.update_coordinator import (
-    CoordinatorEntity,
-)
-from pymywatertoronto.const import KEY_ADDRESS
-from pymywatertoronto.const import KEY_METER_FIRST_READ_DATE
-from pymywatertoronto.const import KEY_METER_LAST_READ_DATE
-from pymywatertoronto.const import KEY_METER_LIST
-from pymywatertoronto.const import KEY_METER_MANUFACTURER_TYPE
-from pymywatertoronto.const import KEY_METER_NUMBER
-from pymywatertoronto.const import KEY_PREMISE_ID
-from pymywatertoronto.const import KEY_PREMISE_LIST
-from pymywatertoronto.enums import (
-    ConsumptionBuckets,
-)
+from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
-from .const import DATA_COORDINATOR
-from .const import DOMAIN
+from .const import DATA_COORDINATOR, DOMAIN
 from .coordinator import MyWaterTorontoDataUpdateCoordinator
 
 _LOGGER = logging.getLogger(__name__)
@@ -44,47 +40,54 @@ SENSORS: Final[tuple[SensorEntityDescription, ...]] = (
         key=KEY_METER_LAST_READ_DATE,
         name="Last Read Date",
         icon="mdi:update",
+        device_class=SensorDeviceClass.DATE,
         entity_category=EntityCategory.DIAGNOSTIC,
     ),
     SensorEntityDescription(
         key=KEY_METER_FIRST_READ_DATE,
         name="First Read Date",
         icon="mdi:update",
+        device_class=SensorDeviceClass.DATE,
         entity_category=EntityCategory.DIAGNOSTIC,
     ),
     SensorEntityDescription(
         key=ConsumptionBuckets.TOTAL_USAGE.value,
         name="Total Usage",
-        icon="mdi:gauge",
+        icon="mdi:water",
         native_unit_of_measurement=VOLUME_CUBIC_METERS,
+        device_class=SensorDeviceClass.WATER,
         state_class=SensorStateClass.TOTAL_INCREASING,
     ),
     SensorEntityDescription(
         key=ConsumptionBuckets.TODAY_USAGE.value,
         name="Daily Usage",
-        icon="mdi:gauge",
+        icon="mdi:water",
         native_unit_of_measurement=VOLUME_CUBIC_METERS,
-        state_class=SensorStateClass.TOTAL_INCREASING,
+        device_class=SensorDeviceClass.WATER,
+        state_class=SensorStateClass.MEASUREMENT,
     ),
     SensorEntityDescription(
         key=ConsumptionBuckets.WEEK_TO_DATE_USAGE.value,
         name="Week To Date Usage",
-        icon="mdi:gauge",
+        icon="mdi:water",
         native_unit_of_measurement=VOLUME_CUBIC_METERS,
+        device_class=SensorDeviceClass.WATER,
         state_class=SensorStateClass.TOTAL_INCREASING,
     ),
     SensorEntityDescription(
         key=ConsumptionBuckets.MONTH_TO_DATE_USAGE.value,
         name="Month To Date Usage",
-        icon="mdi:gauge",
+        icon="mdi:water",
         native_unit_of_measurement=VOLUME_CUBIC_METERS,
+        device_class=SensorDeviceClass.WATER,
         state_class=SensorStateClass.TOTAL_INCREASING,
     ),
     SensorEntityDescription(
         key=ConsumptionBuckets.YEAR_TO_DATE_USAGE.value,
         name="Year To Date Usage",
-        icon="mdi:gauge",
+        icon="mdi:water",
         native_unit_of_measurement=VOLUME_CUBIC_METERS,
+        device_class=SensorDeviceClass.WATER,
         state_class=SensorStateClass.TOTAL_INCREASING,
     ),
 )
@@ -172,9 +175,13 @@ class MyWaterTorontoSensor(
         ][KEY_METER_LIST][self.meter[KEY_METER_NUMBER]]
 
         if self.data_type == KEY_METER_FIRST_READ_DATE:
-            self._attr_native_value = meter_consumption[KEY_METER_FIRST_READ_DATE]
+            date_str = meter_consumption[KEY_METER_FIRST_READ_DATE]
+            date_time_obj = datetime.strptime(date_str, "%Y-%m-%d")
+            self._attr_native_value = date_time_obj
         elif self.data_type == KEY_METER_LAST_READ_DATE:
-            self._attr_native_value = meter_consumption[KEY_METER_LAST_READ_DATE]
+            date_str = meter_consumption[KEY_METER_LAST_READ_DATE]
+            date_time_obj = datetime.strptime(date_str, "%Y-%m-%d")
+            self._attr_native_value = date_time_obj
         else:
             self._attr_native_value = meter_consumption["consumption_data"][
                 self.data_type
