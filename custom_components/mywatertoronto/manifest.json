@@ -3,10 +3,10 @@
   "name": "MyWaterToronto",
   "documentation": "https://github.com/davecpearce/hacs_mywatertoronto",
   "issue_tracker": "https://github.com/davecpearce/hacs_mywatertoronto/issues",
-  "requirements": ["pymywatertoronto==1.1.2"],
+  "requirements": ["pymywatertoronto==1.1.3"],
   "codeowners": ["@davecpearce"],
   "config_flow": true,
   "iot_class": "cloud_polling",
   "loggers": ["mywatertoronto"],
-  "version": "1.2.0"
+  "version": "1.2.1"
 }
