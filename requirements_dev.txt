@@ -1,2 +1,7 @@
-homeassistant==2022.11.0
+homeassistant==2023.2.2
 pymywatertoronto==1.1.3
+black
+isort
+flake8
+pre-commit
+reorder-python-imports
