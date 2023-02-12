@@ -1,4 +1,4 @@
-FROM ghcr.io/ludeeus/devcontainer/integration:latest
+FROM mcr.microsoft.com/vscode/devcontainers/python:0-3.10
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
@@ -13,7 +13,9 @@ RUN git clone --depth=1 -b dev https://github.com/home-assistant/core.git hass \
     && ln -s /workspaces/hacs_mywatertoronto/custom_components/mywatertoronto /opt/hass/homeassistant/components/mywatertoronto
 
 WORKDIR /workspaces/hacs_mywatertoronto
-RUN pip install pre-commit
+COPY requirements_dev.txt ./
+COPY requirements_test.txt ./
+RUN python3 -m pip install -r requirements_test.txt
 
 # Setup the Home Assistant enviropnment
 WORKDIR /opt/hass
