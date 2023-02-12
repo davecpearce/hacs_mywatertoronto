@@ -64,7 +64,7 @@ SENSORS: Final[tuple[SensorEntityDescription, ...]] = (
         icon="mdi:water",
         native_unit_of_measurement=VOLUME_CUBIC_METERS,
         device_class=SensorDeviceClass.WATER,
-        state_class=SensorStateClass.MEASUREMENT,
+        state_class=SensorStateClass.TOTAL_INCREASING,
     ),
     SensorEntityDescription(
         key=ConsumptionBuckets.WEEK_TO_DATE_USAGE.value,
