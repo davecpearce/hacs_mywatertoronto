@@ -1,4 +1,5 @@
 """Test MyWaterToronto setup process."""
+import pytest
 from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 from custom_components.mywatertoronto import (
@@ -10,6 +11,8 @@ from custom_components.mywatertoronto import (
 from custom_components.mywatertoronto.const import DATA_COORDINATOR, DOMAIN
 
 from .const import MOCK_CONFIG
+
+pytestmark = pytest.mark.asyncio
 
 
 async def test_setup_unload_and_reload_entry(hass, bypass_get_data):

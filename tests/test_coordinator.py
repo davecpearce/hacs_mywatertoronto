@@ -1,6 +1,7 @@
 """Test MyWaterTorontoDataUpdateCoordinator."""
 from unittest.mock import patch
 
+import pytest
 from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 from custom_components.mywatertoronto import MyWaterTorontoDataUpdateCoordinator
@@ -14,6 +15,8 @@ from custom_components.mywatertoronto.const import (
 from homeassistant.helpers.update_coordinator import UpdateFailed
 
 from .const import MOCK_CONFIG
+
+pytestmark = pytest.mark.asyncio
 
 
 async def test_async_update_data(hass, account_details, consumption):

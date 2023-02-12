@@ -1,6 +1,8 @@
 """Tests for the config flow."""
 from unittest.mock import PropertyMock, patch
 
+import pytest
+
 from custom_components.mywatertoronto.const import (
     CONF_ACCOUNT_NUMBER,
     CONF_CLIENT_NUMBER,
@@ -24,6 +26,8 @@ from .const import (
 INTEGRATION = "custom_components.mywatertoronto"
 PATCH_CONNECTION = f"{INTEGRATION}.config_flow.Connection.test_connection"
 PATCH_ASYNC_SETUP_ENTRY = f"{INTEGRATION}.async_setup_entry"
+
+pytestmark = pytest.mark.asyncio
 
 
 async def test_form(hass, account_details, bypass_validate_account):

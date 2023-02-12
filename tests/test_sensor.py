@@ -1,14 +1,18 @@
 """Test sensor for MyWaterToronto integration."""
 from unittest.mock import patch
 
+import pytest
 from pytest_homeassistant_custom_component.common import MockConfigEntry
 
-from custom_components.mywatertoronto.const import DOMAIN
 from homeassistant.components.sensor import ENTITY_ID_FORMAT
 from homeassistant.config_entries import ConfigEntryState
 from homeassistant.util import slugify
 
+from custom_components.mywatertoronto.const import DOMAIN
+
 from .const import MOCK_CONFIG, TEST_TITLE, TEST_UNIQUE_ID
+
+pytestmark = pytest.mark.asyncio
 
 
 def generate_entity_id(
