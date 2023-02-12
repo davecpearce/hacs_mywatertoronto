@@ -1,7 +1,6 @@
 {
   "python.linting.enabled": true,
   "python.linting.pylintEnabled": true,
-  "python.linting.pylintArgs": ["--load-plugins=pylint_django"],
   "python.linting.pycodestyleEnabled": false,
   "python.linting.flake8Enabled": true,
   "python.formatting.provider": "black",
