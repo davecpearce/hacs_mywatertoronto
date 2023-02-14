@@ -35,6 +35,7 @@ LAST_PAYMENT_METHOD_TYPES = [
     SelectOptionDict(value="3", label="In person"),
     SelectOptionDict(value="4", label="Bank payment"),
     SelectOptionDict(value="5", label="Payment drop box"),
+    SelectOptionDict(value="6", label="MyToronto Pay"),
 ]
 
 MYWATERTORONTO_SCHEMA = vol.Schema(
