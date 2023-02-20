@@ -71,7 +71,7 @@ There is a config flow for this integration. After installing the custom compone
          - MyToronto Pay (6)
        - Ensure future payment methods do not change otherwise this will need to be updated
 
-At this time, the City of Toronto has not added "MyToronto Pay" as an option to their MyWater Toronto website. If your last payment was made with MyToronto Pay, it has been reported that "In Person" may work.  You can confirm this by testing your login on the MyWater Toronto website directly.
+At this time, the City of Toronto has not added "MyToronto Pay" as an option to their MyWater Toronto website. If your last payment was made with MyToronto Pay, it has been reported that "In Person" may work. You can confirm this by testing your login on the MyWater Toronto website directly.
 
 If you change your payment method and would prefer to keep your sensor history in Home Assistant, edit the config/.storage/core.config_entries file and search for "mywatertoronto".
 
