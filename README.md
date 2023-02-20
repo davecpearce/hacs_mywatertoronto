@@ -62,13 +62,20 @@ There is a config flow for this integration. After installing the custom compone
      - Postal Code
        - Enter postal code in uoppercase and a space (A1A 1A1)
      - Last Payment Method
-       - Select from list baased on your last payment:
-         - Pre-authorized
-         - Mail in cheque
-         - In person
-         - Bank payment
-         - Payment drop box
+       - Select from list based on your last payment:
+         - Pre-authorized (1)
+         - Mail in cheque (2)
+         - In person (3)
+         - Bank payment (4)
+         - Payment drop box (5)
+         - MyToronto Pay (6)
        - Ensure future payment methods do not change otherwise this will need to be updated
+
+At this time, the City of Toronto has not added "MyToronto Pay" as an option to their MyWater Toronto website. If your last payment was made with MyToronto Pay, it has been reported that "In Person" may work. You can confirm this by testing your login on the MyWater Toronto website directly.
+
+If you change your payment method and would prefer to keep your sensor history in Home Assistant, edit the config/.storage/core.config_entries file and search for "mywatertoronto".
+
+Change the "last_payment_method" to the numerical value associated with your payment above.
 
 ## Available Sensors
 
