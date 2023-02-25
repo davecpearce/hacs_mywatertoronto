@@ -1,5 +1,11 @@
 # List of Changes
 
+## Version 1.3.4
+
+### Added
+
+- "N/A" as a Last Payment Type
+
 ## Version 1.1.0
 
 ### Added
