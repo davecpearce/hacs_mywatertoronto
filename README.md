@@ -63,6 +63,7 @@ There is a config flow for this integration. After installing the custom compone
        - Enter postal code in uoppercase and a space (A1A 1A1)
      - Last Payment Method
        - Select from list based on your last payment:
+         - N/A (0)
          - Pre-authorized (1)
          - Mail in cheque (2)
          - In person (3)

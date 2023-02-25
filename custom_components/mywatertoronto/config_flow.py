@@ -30,6 +30,7 @@ from .const import (
 _LOGGER = logging.getLogger(__name__)
 
 LAST_PAYMENT_METHOD_TYPES = [
+    SelectOptionDict(value="0", label="N/A"),
     SelectOptionDict(value="1", label="Pre-authorized"),
     SelectOptionDict(value="2", label="Mail in cheque"),
     SelectOptionDict(value="3", label="In person"),
