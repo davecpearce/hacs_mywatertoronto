@@ -1,5 +1,5 @@
 homeassistant==2023.2.5
-pymywatertoronto==1.3.2
+pymywatertoronto==1.4.0
 black
 isort
 flake8
