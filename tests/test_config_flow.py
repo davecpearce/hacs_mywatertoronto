@@ -30,7 +30,9 @@ PATCH_ASYNC_SETUP_ENTRY = f"{INTEGRATION}.async_setup_entry"
 pytestmark = pytest.mark.asyncio
 
 
-async def test_form(hass, account_details, bypass_validate_account):
+async def test_form(
+    hass, account_details, bypass_validate_account
+):  # pylint: disable=unused-argument
     """Test we get the form."""
 
     result = await hass.config_entries.flow.async_init(
@@ -71,7 +73,9 @@ async def test_form(hass, account_details, bypass_validate_account):
 
 
 # In this case, we want to simulate a failure during validate account
-async def test_validate_account_failure(hass, error_on_async_validate_account):
+async def test_validate_account_failure(
+    hass, error_on_async_validate_account
+):  # pylint: disable=unused-argument
     """Test a failed config flow due to validate account failure."""
     result = await hass.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -89,7 +93,9 @@ async def test_validate_account_failure(hass, error_on_async_validate_account):
 
 
 # In this case, we want to simulate a failure during validate account
-async def test_get_accounts_details_failure(hass, error_on_async_get_account_details):
+async def test_get_accounts_details_failure(
+    hass, error_on_async_get_account_details
+):  # pylint: disable=unused-argument
     """Test a failed config flow due to get account details failure."""
     result = await hass.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}

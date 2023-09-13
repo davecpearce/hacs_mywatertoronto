@@ -5,18 +5,29 @@ from unittest.mock import patch
 from pymywatertoronto.errors import (
     AccountDetailsError,
     ApiError,
+    GetConsumptionError,
     ValidateAccountInfoError,
 )
 import pytest
 from pytest_homeassistant_custom_component.common import load_fixture
 
-pytest_plugins = "pytest_homeassistant_custom_component"
+from custom_components.mywatertoronto.const import (
+    ERROR_API,
+    ERROR_GET_ACCOUNT_DETAILS,
+    ERROR_GET_CONSUMPTION,
+)
+
+PYTEST_PLUGINS = "pytest_homeassistant_custom_component"
 
 
 # This fixture enables loading custom integrations in all tests.
 # Remove to enable selective use of this fixture
 @pytest.fixture(autouse=True)
-def auto_enable_custom_integrations(enable_custom_integrations):
+def auto_enable_custom_integrations(
+    enable_custom_integrations,
+):  # pylint: disable=unused-argument
+    """This fixture enables loading custom integrations in all tests.
+    Remove to enable selective use of this fixture"""
     yield
 
 
@@ -98,7 +109,7 @@ def api_error_on_async_get_account_details_fixture():
     """Simulate an API error when requesting MyWaterToronto account details."""
     with patch(
         "pymywatertoronto.mywatertoronto.MyWaterToronto.async_get_account_details",
-        side_effect=ApiError("Error calling MyWaterToronto API"),
+        side_effect=ApiError(ERROR_API),
     ):
         yield
 
@@ -109,7 +120,7 @@ def error_on_async_get_account_details_fixture():
     """Simulate error when requesting MyWaterToronto account details."""
     with patch(
         "pymywatertoronto.mywatertoronto.MyWaterToronto.async_get_account_details",
-        side_effect=AccountDetailsError("Error getting account details"),
+        side_effect=AccountDetailsError(ERROR_GET_ACCOUNT_DETAILS),
     ):
         yield
 
@@ -120,6 +131,6 @@ def error_on_async_get_consumption_fixture():
     """Simulate error when requesting MyWaterToronto consumption data."""
     with patch(
         "pymywatertoronto.mywatertoronto.MyWaterToronto.async_get_consumption",
-        side_effect=AccountDetailsError("Error getting consumption data"),
+        side_effect=GetConsumptionError(ERROR_GET_CONSUMPTION),
     ):
         yield
