@@ -7,6 +7,6 @@
   "iot_class": "cloud_polling",
   "issue_tracker": "https://github.com/davecpearce/hacs_mywatertoronto/issues",
   "loggers": ["mywatertoronto"],
-  "requirements": ["pymywatertoronto==1.4.0"],
-  "version": "1.4.0"
+  "requirements": ["pymywatertoronto==1.4.4"],
+  "version": "1.4.4"
 }
