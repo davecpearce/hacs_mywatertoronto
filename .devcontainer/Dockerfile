@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/vscode/devcontainers/python:0-3.10
+FROM mcr.microsoft.com/vscode/devcontainers/python:0-3.11
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
@@ -13,7 +13,7 @@ RUN git clone --depth=1 -b dev https://github.com/home-assistant/core.git hass \
     && ln -s /workspaces/hacs_mywatertoronto/custom_components/mywatertoronto /opt/hass/homeassistant/components/mywatertoronto
 
 WORKDIR /workspaces/hacs_mywatertoronto
-COPY requirements_dev.txt ./
+COPY requirements.txt ./
 COPY requirements_test.txt ./
 RUN python3 -m pip install -r requirements_test.txt
 

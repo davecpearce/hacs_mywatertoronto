@@ -85,3 +85,8 @@ class MyWaterTorontoDataUpdateCoordinator(DataUpdateCoordinator):
             )
         except Exception as err:
             raise UpdateFailed(f"{ERROR_GET_CONSUMPTION}: {err}") from err
+
+    async def async_update_data(self) -> dict[str, str]:
+        """Fetch data from MyWaterToronto."""
+
+        await self._async_update_data()

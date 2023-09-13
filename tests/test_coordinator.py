@@ -32,13 +32,16 @@ async def test_async_update_data(hass, account_details, consumption):
         "pymywatertoronto.mywatertoronto.MyWaterToronto.async_get_consumption",
         return_value=consumption,
     ):
-        await coordinator._async_update_data()
+        await coordinator.async_update_data()
 
 
 # In this case, we want to simulate a data failure during validate account
 async def test_async_update_data_validate_account_api_failure(
-    hass, account_details, consumption, api_error_on_async_validate_account
-):
+    hass,
+    account_details,
+    consumption,
+    api_error_on_async_validate_account: None,
+):  # pylint: disable=unused-argument
     """Test data update with API error."""
     config_entry = MockConfigEntry(domain=DOMAIN, data=MOCK_CONFIG, entry_id="test")
 
@@ -53,7 +56,7 @@ async def test_async_update_data_validate_account_api_failure(
     ):
         test_success = False
         try:
-            await coordinator._async_update_data()
+            await coordinator.async_update_data()
         except UpdateFailed as error:
             assert ERROR_API in str(error)
             test_success = True
@@ -64,7 +67,7 @@ async def test_async_update_data_validate_account_api_failure(
 # In this case, we want to simulate a data failure during validate account
 async def test_async_update_data_validate_account_failure(
     hass, account_details, consumption, error_on_async_validate_account
-):
+):  # pylint: disable=unused-argument
     """Test data update with invalid account."""
     config_entry = MockConfigEntry(domain=DOMAIN, data=MOCK_CONFIG, entry_id="test")
 
@@ -79,7 +82,7 @@ async def test_async_update_data_validate_account_failure(
     ):
         test_success = False
         try:
-            await coordinator._async_update_data()
+            await coordinator.async_update_data()
         except UpdateFailed as error:
             assert ERROR_VALIDATING_ACCOUNT in str(error)
             test_success = True
@@ -89,16 +92,26 @@ async def test_async_update_data_validate_account_failure(
 
 # In this case, we want to simulate an api failure during get account details
 async def test_async_update_data_get_account_details_api_failure(
-    hass, account_details, consumption, api_error_on_async_get_account_details
-):
+    hass,
+    account_details,
+    consumption,
+    api_error_on_async_get_account_details,
+):  # pylint: disable=unused-argument
     """Test data update with API error."""
     config_entry = MockConfigEntry(domain=DOMAIN, data=MOCK_CONFIG, entry_id="test")
 
     coordinator = MyWaterTorontoDataUpdateCoordinator(hass=hass, entry=config_entry)
 
-    test_success = False
+    with patch(
+        "pymywatertoronto.mywatertoronto.MyWaterToronto.async_get_account_details",
+        return_value=account_details,
+    ), patch(
+        "pymywatertoronto.mywatertoronto.MyWaterToronto.async_get_consumption",
+        return_value=consumption,
+    ):
+        test_success = False
     try:
-        await coordinator._async_update_data()
+        await coordinator.async_update_data()
     except UpdateFailed as error:
         assert ERROR_API in str(error)
         test_success = True
@@ -108,8 +121,11 @@ async def test_async_update_data_get_account_details_api_failure(
 
 # In this case, we want to simulate a data failure during validate account
 async def test_async_update_data_get_account_details_failure(
-    hass, account_details, consumption, error_on_async_get_account_details
-):
+    hass,
+    account_details,
+    consumption,
+    error_on_async_get_account_details,
+):  # pylint: disable=unused-argument
     """Test data update with error during get account details."""
     config_entry = MockConfigEntry(domain=DOMAIN, data=MOCK_CONFIG, entry_id="test")
 
@@ -121,7 +137,7 @@ async def test_async_update_data_get_account_details_failure(
     ):
         test_success = False
         try:
-            await coordinator._async_update_data()
+            await coordinator.async_update_data()
         except UpdateFailed as error:
             assert ERROR_GET_ACCOUNT_DETAILS in str(error)
             test_success = True
@@ -131,8 +147,8 @@ async def test_async_update_data_get_account_details_failure(
 
 # In this case, we want to simulate a data failure during validate account
 async def test_async_update_data_get_consumption_failure(
-    hass, account_details, consumption, error_on_async_get_consumption
-):
+    hass, account_details, consumption, error_on_async_get_consumption: None
+):  # pylint: disable=unused-argument
     """Test data update with error during get consumption."""
     config_entry = MockConfigEntry(domain=DOMAIN, data=MOCK_CONFIG, entry_id="test")
 
@@ -143,9 +159,11 @@ async def test_async_update_data_get_consumption_failure(
         return_value=account_details,
     ):
         test_success = False
+
         try:
-            await coordinator._async_update_data()
-        except Exception as error:
+            await coordinator.async_update_data()
+        except UpdateFailed as error:
+            print(f"{error}")
             assert ERROR_GET_CONSUMPTION in str(error)
             test_success = True
 
