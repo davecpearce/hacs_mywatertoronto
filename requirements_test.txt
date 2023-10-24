@@ -3,7 +3,7 @@ black
 isort
 pre-commit
 pylint
-pytest-homeassistant-custom-component==0.13.55
+pytest-homeassistant-custom-component==0.13.68
 pytest-cov
 pytest-asyncio
 reorder-python-imports
