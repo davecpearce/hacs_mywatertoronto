@@ -113,6 +113,14 @@ async def async_setup_entry(
             _LOGGER.debug("Premise found: %s", address)
 
             for meter in premise[KEY_METER_LIST]:
+                if KEY_METER_LAST_READ_DATE not in meter:
+                    _LOGGER.debug(
+                        "Meter: %s does not have a %s value, skipping meter",
+                        meter[KEY_METER_NUMBER],
+                        KEY_METER_LAST_READ_DATE,
+                    )
+                    continue
+
                 meter_number = meter[KEY_METER_NUMBER]
                 _LOGGER.debug("Meter %s found at %s", meter_number, address)
 
