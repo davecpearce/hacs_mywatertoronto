@@ -1,4 +1,4 @@
-pymywatertoronto==1.4.4
+pymywatertoronto==1.5.0
 black
 isort
 pre-commit
