@@ -22,7 +22,9 @@ from homeassistant.components.sensor import (
     SensorStateClass,
 )
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.const import VOLUME_CUBIC_METERS
+from homeassistant.const import (
+    UnitOfVolume,
+)
 from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers.entity import DeviceInfo, EntityCategory
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
@@ -54,7 +56,7 @@ SENSORS: Final[tuple[SensorEntityDescription, ...]] = (
         key=ConsumptionBuckets.TOTAL_USAGE.value,
         name="Total Usage",
         icon="mdi:water",
-        native_unit_of_measurement=VOLUME_CUBIC_METERS,
+        native_unit_of_measurement=UnitOfVolume.CUBIC_METERS,
         device_class=SensorDeviceClass.WATER,
         state_class=SensorStateClass.TOTAL_INCREASING,
     ),
@@ -62,7 +64,7 @@ SENSORS: Final[tuple[SensorEntityDescription, ...]] = (
         key=ConsumptionBuckets.TODAY_USAGE.value,
         name="Daily Usage",
         icon="mdi:water",
-        native_unit_of_measurement=VOLUME_CUBIC_METERS,
+        native_unit_of_measurement=UnitOfVolume.CUBIC_METERS,
         device_class=SensorDeviceClass.WATER,
         state_class=SensorStateClass.TOTAL_INCREASING,
     ),
@@ -70,7 +72,7 @@ SENSORS: Final[tuple[SensorEntityDescription, ...]] = (
         key=ConsumptionBuckets.WEEK_TO_DATE_USAGE.value,
         name="Week To Date Usage",
         icon="mdi:water",
-        native_unit_of_measurement=VOLUME_CUBIC_METERS,
+        native_unit_of_measurement=UnitOfVolume.CUBIC_METERS,
         device_class=SensorDeviceClass.WATER,
         state_class=SensorStateClass.TOTAL_INCREASING,
     ),
@@ -78,7 +80,7 @@ SENSORS: Final[tuple[SensorEntityDescription, ...]] = (
         key=ConsumptionBuckets.MONTH_TO_DATE_USAGE.value,
         name="Month To Date Usage",
         icon="mdi:water",
-        native_unit_of_measurement=VOLUME_CUBIC_METERS,
+        native_unit_of_measurement=UnitOfVolume.CUBIC_METERS,
         device_class=SensorDeviceClass.WATER,
         state_class=SensorStateClass.TOTAL_INCREASING,
     ),
@@ -86,7 +88,7 @@ SENSORS: Final[tuple[SensorEntityDescription, ...]] = (
         key=ConsumptionBuckets.YEAR_TO_DATE_USAGE.value,
         name="Year To Date Usage",
         icon="mdi:water",
-        native_unit_of_measurement=VOLUME_CUBIC_METERS,
+        native_unit_of_measurement=UnitOfVolume.CUBIC_METERS,
         device_class=SensorDeviceClass.WATER,
         state_class=SensorStateClass.TOTAL_INCREASING,
     ),
