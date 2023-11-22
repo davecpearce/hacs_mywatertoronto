@@ -15,3 +15,9 @@ updates:
       interval: daily
     ignore:
       - dependency-name: "homeassistant"
+  - package-ecosystem: pip
+    directory: "/custom_components/mywatertoronto"
+    schedule:
+      interval: daily
+    ignore:
+      - dependency-name: "homeassistant"

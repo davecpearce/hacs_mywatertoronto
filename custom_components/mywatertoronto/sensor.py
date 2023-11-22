@@ -22,7 +22,7 @@ from homeassistant.components.sensor import (
     SensorStateClass,
 )
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.const import VOLUME_CUBIC_METERS
+from homeassistant.const import UnitOfVolume
 from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers.entity import DeviceInfo, EntityCategory
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
@@ -54,7 +54,7 @@ SENSORS: Final[tuple[SensorEntityDescription, ...]] = (
         key=ConsumptionBuckets.TOTAL_USAGE.value,
         name="Total Usage",
         icon="mdi:water",
-        native_unit_of_measurement=VOLUME_CUBIC_METERS,
+        native_unit_of_measurement=UnitOfVolume.CUBIC_METERS,
         device_class=SensorDeviceClass.WATER,
         state_class=SensorStateClass.TOTAL_INCREASING,
     ),
@@ -62,7 +62,7 @@ SENSORS: Final[tuple[SensorEntityDescription, ...]] = (
         key=ConsumptionBuckets.TODAY_USAGE.value,
         name="Daily Usage",
         icon="mdi:water",
-        native_unit_of_measurement=VOLUME_CUBIC_METERS,
+        native_unit_of_measurement=UnitOfVolume.CUBIC_METERS,
         device_class=SensorDeviceClass.WATER,
         state_class=SensorStateClass.TOTAL_INCREASING,
     ),
@@ -70,7 +70,7 @@ SENSORS: Final[tuple[SensorEntityDescription, ...]] = (
         key=ConsumptionBuckets.WEEK_TO_DATE_USAGE.value,
         name="Week To Date Usage",
         icon="mdi:water",
-        native_unit_of_measurement=VOLUME_CUBIC_METERS,
+        native_unit_of_measurement=UnitOfVolume.CUBIC_METERS,
         device_class=SensorDeviceClass.WATER,
         state_class=SensorStateClass.TOTAL_INCREASING,
     ),
@@ -78,7 +78,7 @@ SENSORS: Final[tuple[SensorEntityDescription, ...]] = (
         key=ConsumptionBuckets.MONTH_TO_DATE_USAGE.value,
         name="Month To Date Usage",
         icon="mdi:water",
-        native_unit_of_measurement=VOLUME_CUBIC_METERS,
+        native_unit_of_measurement=UnitOfVolume.CUBIC_METERS,
         device_class=SensorDeviceClass.WATER,
         state_class=SensorStateClass.TOTAL_INCREASING,
     ),
@@ -86,7 +86,7 @@ SENSORS: Final[tuple[SensorEntityDescription, ...]] = (
         key=ConsumptionBuckets.YEAR_TO_DATE_USAGE.value,
         name="Year To Date Usage",
         icon="mdi:water",
-        native_unit_of_measurement=VOLUME_CUBIC_METERS,
+        native_unit_of_measurement=UnitOfVolume.CUBIC_METERS,
         device_class=SensorDeviceClass.WATER,
         state_class=SensorStateClass.TOTAL_INCREASING,
     ),
@@ -113,6 +113,14 @@ async def async_setup_entry(
             _LOGGER.debug("Premise found: %s", address)
 
             for meter in premise[KEY_METER_LIST]:
+                if KEY_METER_LAST_READ_DATE not in meter:
+                    _LOGGER.debug(
+                        "Meter: %s does not have a %s value, skipping meter",
+                        meter[KEY_METER_NUMBER],
+                        KEY_METER_LAST_READ_DATE,
+                    )
+                    continue
+
                 meter_number = meter[KEY_METER_NUMBER]
                 _LOGGER.debug("Meter %s found at %s", meter_number, address)
 
